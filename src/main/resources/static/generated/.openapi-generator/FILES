@@ -1,0 +1,16 @@
+.babelrc
+.gitignore
+.openapi-generator-ignore
+.travis.yml
+README.md
+docs/WelcomeControllerApi.md
+docs/WelcomeMessage.md
+git_push.sh
+mocha.opts
+package.json
+src/ApiClient.js
+src/api/WelcomeControllerApi.js
+src/index.js
+src/model/WelcomeMessage.js
+test/api/WelcomeControllerApi.spec.js
+test/model/WelcomeMessage.spec.js

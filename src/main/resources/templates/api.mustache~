@@ -1,0 +1,15 @@
+import ApiClient from '../ApiClient.js';
+
+export default class {{classname}} {
+constructor(apiClient) {
+this.apiClient = apiClient || new ApiClient();
+}
+
+{{#operations}}
+    {{#operation}}
+        async {{nickname}}() {
+        return this.apiClient.callApi('{{path}}', '{{httpMethod}}');
+        }
+    {{/operation}}
+{{/operations}}
+}

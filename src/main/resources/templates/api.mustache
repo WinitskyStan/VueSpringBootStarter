@@ -1,0 +1,26 @@
+import ApiClient from "../ApiClient.js";
+{{#imports}}
+    import {{import}} from '../model/{{import}}.js';
+{{/imports}}
+
+export default class {{classname}} {
+constructor(apiClient) {
+this.apiClient = apiClient || ApiClient.instance;
+}
+
+{{#operations}}
+    {{#operation}}
+        {{nickname}}WithHttpInfo({{#parameters}}{{paramName}}{{^required}}={{{defaultValue}}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/parameters}}) {
+        const postBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+        return this.apiClient.callApi('{{path}}', '{{httpMethod}}', {}, {}, {}, {}, postBody, [], ['application/json'], {{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}null{{/returnType}});
+        }
+
+        {{nickname}}({{#parameters}}{{paramName}}{{^required}}={{{defaultValue}}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/parameters}}) {
+        return this.{{nickname}}WithHttpInfo({{#parameters}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/parameters}})
+        .then(function(response_and_data) {
+        return response_and_data.data;
+        });
+        }
+    {{/operation}}
+{{/operations}}
+}

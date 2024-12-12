@@ -1,0 +1,25 @@
+import ApiClient from '../ApiClient.js';
+
+{{#imports}}
+import {{import}} from '{{modelPackage}}/{{import}}.js';
+{{/imports}}
+
+export default class {{classname}} {
+    constructor({{#vars}}{{name}}{{^required}}={{defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/vars}}) {
+        {{#vars}}
+        this.{{name}} = {{name}};
+        {{/vars}}
+    }
+
+    static constructFromObject(data, obj) {
+        if (data) {
+            obj = obj || new {{classname}}();
+            {{#vars}}
+            if (data.hasOwnProperty('{{baseName}}')) {
+                obj.{{name}} = ApiClient.convertToType(data['{{baseName}}'], '{{datatype}}');
+            }
+            {{/vars}}
+        }
+        return obj;
+    }
+}

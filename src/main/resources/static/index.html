@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <title>Hello Page</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/superagent"></script>
+
+    <style>
+        .message {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <!-- import vue js 3 from cnd -->
+</head>
+<body>
+<div id="app" >
+    <div class="message">
+        <h1>{{ message }}</h1>
+    </div>
+    <div class="message">
+        <button class="button" v-on:click="getHello">Get Hello</button>
+    </div>
+</div>
+
+<script type="module">
+    import ApiClient from './generated/src/ApiClient.js';
+    import WelcomeControllerApi from './generated/src/api/WelcomeControllerApi.js';
+
+    const apiInstance = new WelcomeControllerApi(new ApiClient());
+
+    const app = Vue.createApp({
+        setup() {
+            const message = Vue.ref('Click the button to get a hello message!');
+
+            const getHello = async () => {
+                try {
+                    const response = await apiInstance.getRandomWelcomeWithHttpInfo();
+                    message.value = response.message;
+                } catch (error) {
+                    console.error(error);
+                    message.value = 'Error getting hello message';
+                }
+            };
+
+            return {
+                message,
+                getHello
+            };
+        }
+    });
+
+    app.mount('#app');
+</script>
+</body>
+</html>
